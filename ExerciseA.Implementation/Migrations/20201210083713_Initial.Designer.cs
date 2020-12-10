@@ -4,14 +4,16 @@ using ExerciseA.Implementation.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ExerciseA.Implementation.Migrations
 {
     [DbContext(typeof(ExerciseAContext))]
-    partial class ExerciseAContextModelSnapshot : ModelSnapshot
+    [Migration("20201210083713_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

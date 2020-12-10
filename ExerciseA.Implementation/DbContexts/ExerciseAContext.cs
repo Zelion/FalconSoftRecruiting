@@ -16,7 +16,7 @@ namespace ExerciseA.Implementation.DbContexts
         public DbSet<Order> Order { get; set; }
         public DbSet<OrderDetail> OrderDetail { get; set; }
         public DbSet<Product> Product { get; set; }
-        //public DbSet<UserInfo> UserInfo { get; set; }
+        public DbSet<UserInfo> UserInfo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,19 +46,19 @@ namespace ExerciseA.Implementation.DbContexts
             modelBuilder.Entity<Product>()
                 .HasKey(c => c.Id);
 
-            //// User Info
-            //modelBuilder.Entity<UserInfo>()
-            //   .Property(p => p.FirstName).HasMaxLength(30);
-            //modelBuilder.Entity<UserInfo>()
-            //   .Property(p => p.LastName).HasMaxLength(30);
-            //modelBuilder.Entity<UserInfo>()
-            //   .Property(p => p.UserName).HasMaxLength(30).IsRequired();
-            //modelBuilder.Entity<UserInfo>()
-            //   .Property(p => p.Email).HasMaxLength(50).IsRequired();
-            //modelBuilder.Entity<UserInfo>()
-            //   .Property(p => p.Password).HasMaxLength(20).IsRequired();
-            //modelBuilder.Entity<UserInfo>()
-            //    .HasKey(c => c.Id);
+            // User Info
+            modelBuilder.Entity<UserInfo>()
+               .Property(p => p.FirstName).HasMaxLength(30);
+            modelBuilder.Entity<UserInfo>()
+               .Property(p => p.LastName).HasMaxLength(30);
+            modelBuilder.Entity<UserInfo>()
+               .Property(p => p.UserName).HasMaxLength(30).IsRequired();
+            modelBuilder.Entity<UserInfo>()
+               .Property(p => p.Email).HasMaxLength(50).IsRequired();
+            modelBuilder.Entity<UserInfo>()
+               .Property(p => p.Password).HasMaxLength(20).IsRequired();
+            modelBuilder.Entity<UserInfo>()
+                .HasKey(c => c.Id);
 
 
             // Seed using Bogus
@@ -95,19 +95,19 @@ namespace ExerciseA.Implementation.DbContexts
                 .Entity<OrderDetail>()
                 .HasData(orderDetail.GenerateBetween(20, 20).ToArray());
 
-            ////  Users Info
-            //var userInfoIds = 1;
-            //var userInfo = new Faker<UserInfo>()
-            //    .RuleFor(m => m.Id, f => userInfoIds++)
-            //    .RuleFor(m => m.FirstName, f => f.Name.FirstName())
-            //    .RuleFor(m => m.LastName, f => f.Name.LastName())
-            //    .RuleFor(m => m.UserName, f => f.Internet.UserName())
-            //    .RuleFor(m => m.Email, f => f.Internet.Email())
-            //    .RuleFor(m => m.Password, f => f.Internet.Password())
-            //    .RuleFor(m => m.CreatedDate, f => f.Date.Recent(7));
-            //modelBuilder
-            //    .Entity<UserInfo>()
-            //    .HasData(userInfo.GenerateBetween(5, 5).ToArray());
+            //  Users Info
+            var userInfoIds = 1;
+            var userInfo = new Faker<UserInfo>()
+                .RuleFor(m => m.Id, f => userInfoIds++)
+                .RuleFor(m => m.FirstName, f => f.Name.FirstName())
+                .RuleFor(m => m.LastName, f => f.Name.LastName())
+                .RuleFor(m => m.UserName, f => f.Internet.UserName())
+                .RuleFor(m => m.Email, f => f.Internet.Email())
+                .RuleFor(m => m.Password, f => f.Internet.Password())
+                .RuleFor(m => m.CreatedDate, f => f.Date.Recent(7));
+            modelBuilder
+                .Entity<UserInfo>()
+                .HasData(userInfo.GenerateBetween(5, 5).ToArray());
         }
     }
 }

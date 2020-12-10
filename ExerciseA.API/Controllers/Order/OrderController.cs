@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ExerciseA.API.Controllers.Order.Response;
 using ExerciseA.API.Requests;
+using ExerciseA.Domain.DataContext;
 using ExerciseA.Domain.Filters;
 using ExerciseA.Domain.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExerciseA.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/orders")]
     public class OrderController : ControllerBase
@@ -40,6 +41,22 @@ namespace ExerciseA.API.Controllers
                 var result = mapper.Map<IEnumerable<OrderResponse>>(orders);
 
                 return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(long id, [FromBody] OrderDetailEditRequest orderDetailEditRequest)
+        {
+            try
+            {
+                var orderDetail = mapper.Map<OrderDetailDataContext>(orderDetailEditRequest);
+                await orderService.UpdateDetailAsync(orderDetail, id);
+
+                return Ok();
             }
             catch (Exception e)
             {

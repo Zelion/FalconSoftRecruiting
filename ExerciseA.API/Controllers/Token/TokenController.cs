@@ -1,44 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using ExerciseA.Domain.Entities;
+using ExerciseA.Domain.Services;
 using ExerciseA.Implementation.DbContexts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ExerciseA.API.Controllers.Token
 {
-    [Route("api/controller")]
+    [Route("api/token")]
     [ApiController]
-    public class TokenController: ControllerBase
+    public class TokenController : ControllerBase
     {
         public IConfiguration configuration;
         private readonly ExerciseAContext context;
+        private readonly IUserService userService;
 
-        public TokenController(IConfiguration configuration, ExerciseAContext context)
+        public TokenController(
+            IConfiguration configuration,
+            ExerciseAContext context,
+            IUserService userService
+            )
         {
             this.configuration = configuration;
             this.context = context;
+            this.userService = userService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(UserInfo _userData)
+        public async Task<IActionResult> Post(UserInfo userData)
         {
-            if (_userData != null && _userData.Email != null && _userData.Password != null)
+            if (userData != null && userData.Email != null && userData.Password != null)
             {
-                var user = await GetUser(_userData.Email, _userData.Password);
+                var user = await userService.GetUser(userData.Email, userData.Password);
 
                 if (user != null)
                 {
                     //create claims details based on the user information
                     var claims = new[] {
-                    new Claim(JwtRegisteredClaimNames.Sub, configuration["Jwt:Subject"]),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
                     new Claim("Id", user.Id.ToString()),
@@ -52,7 +55,7 @@ namespace ExerciseA.API.Controllers.Token
 
                     var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-                    var token = new JwtSecurityToken(null, null, claims, expires: DateTime.UtcNow.AddDays(1), signingCredentials: signIn);
+                    var token = new JwtSecurityToken(configuration["Jwt:Issuer"], configuration["Jwt:Audience"], claims, expires: DateTime.UtcNow.AddDays(1), signingCredentials: signIn);
 
                     return Ok(new JwtSecurityTokenHandler().WriteToken(token));
                 }
@@ -65,11 +68,6 @@ namespace ExerciseA.API.Controllers.Token
             {
                 return BadRequest();
             }
-        }
-
-        private async Task<UserInfo> GetUser(string email, string password)
-        {
-            return await context.UserInfo.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
         }
     }
 }

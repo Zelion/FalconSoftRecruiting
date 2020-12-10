@@ -2,8 +2,7 @@ using System;
 using System.Text;
 using ExerciseA.API.Services;
 using ExerciseA.Implementation.DbContexts;
-//using ExerciseA.Implementation.DbContexts;
-//using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -32,21 +31,21 @@ namespace ExerciseA.API
 
             services.AddControllers();
 
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //.AddJwtBearer(x =>
-            //{
-            //    x.RequireHttpsMetadata = false;
-            //    x.SaveToken = true;
-            //    x.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuerSigningKey = true,
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:SecretKey"])),
-            //        ValidateIssuer = false,
-            //        ValidateAudience = false,
-            //        //ValidAudience = Configuration["Jwt:Audience"],
-            //        //ValidIssuer = Configuration["Jwt:Issuer"]
-            //    };
-            //});
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:SecretKey"])),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    //ValidAudience = Configuration["Jwt:Audience"],
+                    //ValidIssuer = Configuration["Jwt:Issuer"]
+                };
+            });
 
             //services.AddMvc();
         }
@@ -62,8 +61,8 @@ namespace ExerciseA.API
 
             app.UseRouting();
 
-            //app.UseAuthentication();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

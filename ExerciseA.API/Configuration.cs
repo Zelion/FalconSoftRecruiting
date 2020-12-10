@@ -2,7 +2,9 @@
 using ExerciseA.API.Mappings;
 using ExerciseA.Domain.Respositories;
 using ExerciseA.Domain.Services;
+using ExerciseA.Domain.UnitsOfWork;
 using ExerciseA.Implementation.Repositories;
+using ExerciseA.Implementation.UnitsOfWork;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ExerciseA.API.Services
@@ -13,9 +15,15 @@ namespace ExerciseA.API.Services
         {
             // Services
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IUserService, UserService>();
 
             // Repositories
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IOrderDetailRepository, OrderDetailRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+
+            // Units Of Work
+            services.AddTransient<IOrderUnitOfWork, OrderUnitOfWork>();
 
             return services;
         }

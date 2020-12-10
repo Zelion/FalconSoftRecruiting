@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ExerciseA.API.Controllers.Order.Response;
 using ExerciseA.API.Requests;
+using ExerciseA.Domain.DataContext;
 using ExerciseA.Domain.Entities;
 using ExerciseA.Domain.Filters;
 
@@ -32,6 +33,8 @@ namespace ExerciseA.API.Mappings
                     (src => src.Product.Price));
 
             CreateMap<GetAllOrdersFilterRequest, GetAllOrdersFilter>();
+
+            CreateMap<OrderDetailEditRequest, OrderDetailDataContext>();
         }
     }
 }

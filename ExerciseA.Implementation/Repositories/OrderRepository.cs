@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExerciseA.Domain.DataContext;
 using ExerciseA.Domain.Entities;
 using ExerciseA.Domain.Filters;
 using ExerciseA.Domain.Respositories;
@@ -11,16 +12,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ExerciseA.Implementation.Repositories
 {
-    public class OrderRepository : IOrderRepository
+    public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
-        protected readonly ExerciseAContext dbContext;
-
-        public OrderRepository(ExerciseAContext dbContext)
+        public OrderRepository(ExerciseAContext dbContext): base(dbContext)
         {
-            this.dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<Order>> GetAll(PaginationFilter paginationFilter, GetAllOrdersFilter filter = null)
+        public async Task<IEnumerable<Order>> GetAllFilteredAsync(PaginationFilter paginationFilter, GetAllOrdersFilter filter = null)
         {
             var query = dbContext.Set<Order>()
                             .Include(x => x.OrderDetails)
