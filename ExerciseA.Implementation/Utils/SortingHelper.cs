@@ -25,7 +25,7 @@ namespace ExerciseA.Implementation.Utils
                 var objectProperty = propertyInfos.FirstOrDefault(pi => pi.Name.Equals(propertyFromQueryName, StringComparison.InvariantCultureIgnoreCase));
                 if (objectProperty == null)
                     continue;
-                var sortingOrder = param.EndsWith(" desc") ? "descending" : "ascending";
+                var sortingOrder = param.EndsWith(" asc") ? "ascending" : "descending";
                 orderQueryBuilder.Append($"{objectProperty.Name} {sortingOrder}, ");
             }
             var orderQuery = orderQueryBuilder.ToString().TrimEnd(',', ' ');
