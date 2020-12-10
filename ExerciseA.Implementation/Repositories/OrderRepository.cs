@@ -18,19 +18,20 @@ namespace ExerciseA.Implementation.Repositories
         {
         }
 
-        public async Task<IEnumerable<Order>> GetAllFilteredAsync(PaginationFilter paginationFilter, GetAllOrdersFilter filter = null)
+        public async Task<IEnumerable<Order>> GetAllFilteredAsync(PaginationFilter paginationFilter, SortingFilter sortingFilter, GetAllOrdersFilter filter = null)
         {
             var query = dbContext.Set<Order>()
                             .Include(x => x.OrderDetails)
                                 .ThenInclude(x => x.Product)
                             .AsQueryable();
 
-            query = AddFiltersOnQuery(query, filter);
+            AddFiltersOnQuery(ref query, filter);
+            SortingHelper.ApplySort(ref query, sortingFilter.OrderBy);
 
             return await PaginationHelper<Order>.PagedList(query, paginationFilter.Page);
         }
 
-        private IQueryable<Order> AddFiltersOnQuery(IQueryable<Order> query, GetAllOrdersFilter filter)
+        private void AddFiltersOnQuery(ref IQueryable<Order> query, GetAllOrdersFilter filter)
         {
             if (!string.IsNullOrEmpty(filter?.OrderName))
                 query = query.Where(x => x.CustomerName.Equals(filter.OrderName));
@@ -42,8 +43,6 @@ namespace ExerciseA.Implementation.Repositories
                 query = query.Where(x => x.OrderDetails.Any(x => x.Product.Price == filter.ProductPrice));
             if (filter?.Quantity != 0)
                 query = query.Where(x => x.OrderDetails.Any(x => x.Quantity == filter.Quantity));
-
-            return query;
         }
 
     }

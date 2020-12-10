@@ -30,14 +30,15 @@ namespace ExerciseA.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderResponse>>> Get([FromQuery] PaginationRequest paginationRequest, [FromQuery] GetAllOrdersFilterRequest filterRequest = null)
+        public async Task<ActionResult<IEnumerable<OrderResponse>>> Get([FromQuery] PaginationRequest paginationRequest, [FromQuery] SortingRequest sortingrequest, [FromQuery] GetAllOrdersFilterRequest filterRequest = null)
         {
             try
             {
                 var pagination = mapper.Map<PaginationFilter>(paginationRequest);
                 var filter = mapper.Map<GetAllOrdersFilter>(filterRequest);
+                var sorting = mapper.Map<SortingFilter>(sortingrequest);
 
-                var orders = await orderService.GetOrders(pagination, filter);
+                var orders = await orderService.GetOrders(pagination, sorting, filter);
                 var result = mapper.Map<IEnumerable<OrderResponse>>(orders);
 
                 return Ok(result);

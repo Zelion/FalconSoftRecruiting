@@ -22,9 +22,9 @@ namespace ExerciseA.Domain.Services
             this.orderUnitOfWork = orderUnitOfWork;
         }
 
-        public async Task<IEnumerable<Order>> GetOrders(PaginationFilter paginationFilter, GetAllOrdersFilter filter = null)
+        public async Task<IEnumerable<Order>> GetOrders(PaginationFilter paginationFilter, SortingFilter sortingFilter, GetAllOrdersFilter filter = null)
         {
-            return await orderRepository.GetAllFilteredAsync(paginationFilter, filter);
+            return await orderRepository.GetAllFilteredAsync(paginationFilter, sortingFilter, filter);
         }
 
         public async Task UpdateDetailAsync(OrderDetailDataContext dataContext, long id)

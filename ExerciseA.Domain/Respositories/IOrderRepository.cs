@@ -7,6 +7,6 @@ namespace ExerciseA.Domain.Respositories
 {
     public interface IOrderRepository : IBaseRepository<Order>
     {
-        public Task<IEnumerable<Order>> GetAllFilteredAsync(PaginationFilter paginationFilter, GetAllOrdersFilter filter = null);
+        public Task<IEnumerable<Order>> GetAllFilteredAsync(PaginationFilter paginationFilter, SortingFilter sortingFilter, GetAllOrdersFilter filter = null);
     }
 }

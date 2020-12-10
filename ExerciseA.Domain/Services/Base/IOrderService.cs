@@ -8,7 +8,7 @@ namespace ExerciseA.Domain.Services
 {
     public interface IOrderService
     {
-        public Task<IEnumerable<Order>> GetOrders(PaginationFilter paginationRequest, GetAllOrdersFilter filter = null);
+        public Task<IEnumerable<Order>> GetOrders(PaginationFilter paginationRequest, SortingFilter sortingFilter, GetAllOrdersFilter filter = null);
         Task UpdateDetailAsync(OrderDetailDataContext dataContext, long id);
     }
 }

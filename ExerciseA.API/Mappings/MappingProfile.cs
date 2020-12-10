@@ -33,6 +33,7 @@ namespace ExerciseA.API.Mappings
                     (src => src.Product.Price));
 
             CreateMap<GetAllOrdersFilterRequest, GetAllOrdersFilter>();
+            CreateMap<SortingRequest, SortingFilter>();
 
             CreateMap<OrderDetailEditRequest, OrderDetailDataContext>();
         }
