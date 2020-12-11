@@ -11,7 +11,7 @@ namespace ExerciseA.Implementation.Utils
     {
         public static void ApplySort(ref IQueryable<Order> query, string orderByQueryString)
         {
-            if (!query.Any())
+            if (!query.Any() || string.IsNullOrEmpty(orderByQueryString))
                 return;
 
             var orderParams = orderByQueryString.Trim().Split(',');

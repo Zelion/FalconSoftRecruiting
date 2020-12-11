@@ -33,12 +33,12 @@ namespace ExerciseA.Implementation.Repositories
 
         private void AddFiltersOnQuery(ref IQueryable<Order> query, GetAllOrdersFilter filter)
         {
-            if (!string.IsNullOrEmpty(filter?.OrderName))
-                query = query.Where(x => x.CustomerName.Equals(filter.OrderName));
-            if (!filter.OrderCreatedDate.Equals(DateTime.MinValue))
-                query = query.Where(x => x.CreatedDate.Equals(filter.OrderCreatedDate));
+            if (!string.IsNullOrEmpty(filter?.CustomerName))
+                query = query.Where(x => x.CustomerName.Contains(filter.CustomerName));
+            if (!filter.CreatedDate.Equals(DateTime.MinValue))
+                query = query.Where(x => x.CreatedDate.Equals(filter.CreatedDate));
             if (!string.IsNullOrEmpty(filter?.ProductName))
-                query = query.Where(x => x.OrderDetails.Any(x => x.Product.Name.Equals(filter.ProductName)));
+                query = query.Where(x => x.OrderDetails.Any(x => x.Product.Name.Contains(filter.ProductName)));
             if (filter?.ProductPrice != 0)
                 query = query.Where(x => x.OrderDetails.Any(x => x.Product.Price == filter.ProductPrice));
             if (filter?.Quantity != 0)

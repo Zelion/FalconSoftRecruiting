@@ -42,12 +42,10 @@ namespace ExerciseA.API
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:SecretKey"])),
                     ValidateIssuer = false,
                     ValidateAudience = false,
-                    //ValidAudience = Configuration["Jwt:Audience"],
-                    //ValidIssuer = Configuration["Jwt:Issuer"]
                 };
             });
 
-            //services.AddMvc();
+            services.AddHttpClient();
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
