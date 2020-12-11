@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExerciseA.Domain.Entities
+﻿namespace ExerciseA.Domain.Entities
 {
-    public class OrderDetail: BaseEntity
+    public class OrderDetail : BaseEntity
     {
         public int Quantity { get; set; }
 

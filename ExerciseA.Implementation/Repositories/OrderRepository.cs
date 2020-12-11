@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ExerciseA.Domain.DataContext;
 using ExerciseA.Domain.Entities;
 using ExerciseA.Domain.Filters;
 using ExerciseA.Domain.Respositories;
@@ -14,7 +13,7 @@ namespace ExerciseA.Implementation.Repositories
 {
     public class OrderRepository : BaseRepository<Order>, IOrderRepository
     {
-        public OrderRepository(ExerciseAContext dbContext): base(dbContext)
+        public OrderRepository(ExerciseAContext dbContext) : base(dbContext)
         {
         }
 

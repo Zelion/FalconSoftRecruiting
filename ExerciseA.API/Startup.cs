@@ -1,4 +1,3 @@
-using System;
 using System.Text;
 using ExerciseA.API.Services;
 using ExerciseA.Implementation.DbContexts;
