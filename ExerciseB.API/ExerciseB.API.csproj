@@ -1,16 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>ExerciseB.API</AssemblyName>
+    <RootNamespace>ExerciseB.API</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Bogus" Version="32.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.10" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ExerciseA.Domain\ExerciseA.Domain.csproj" />
-  </ItemGroup>
 
 </Project>
